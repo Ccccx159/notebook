@@ -55,27 +55,32 @@
     ~~~
     ![](https://user-images.githubusercontent.com/35327600/209284969-1ccd4d06-b0ad-4129-a746-3e7d487923ae.png)
     当然也可以不用以上命令，直接点击源码链接，去github网站上进行下载。（此处也有可能有网络问题，存在网络问题是，请百度关键词“github 下载失败”）
+
 2. 进入源码目录后，执行命令 `gcc -fPIC -shared unraid.c -o BTRS.key`，会一点C语言或者C++在linux环境编译的话，就能明白这一步在做什么，不明白也没关系，无脑执行即可。
    <font color="red">此时会在当前目录下生成一个名为“**BTRS.key**”的文件，你猜的没错，这就是我们所需要的密钥文件</font>
+
 3. 将第二步中生成的“**BTRS.key**”拷贝到U盘的“**config**”目录下
+
+    ![](https://user-images.githubusercontent.com/35327600/209305975-9f6ec553-e639-4fd3-8170-6584aa525047.png)
+
 4. 在config目录下找到一个名为“**go**”的文件，先将该文件备份一下，然后用以下内容替换原文件的内容
-	~~~bash
-	#!/bin/bash
-	# ---------修改以下三项内容，只需要修改等号右边内容，左边不要变更--------- #
-	# GUID 将单引号内的内容替换成你自己U盘对应GUID
-	export UNRAID_GUID='xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-	# NAME 随便填
-	export UNRAID_NAME=unraid_test
-	# 这是unix的一个时间戳，百度关键词“unix时间戳”，找一个转换网站，将当前时间转换为时间戳后填入，下面有示例
-	export UNRAID_DATE=1658129986
-	# -----------不要修改！！！不要修改！！！不要修改！！！------------------ #
-	export UNRAID_VERSION=Pro
-	LD_PRELOAD=/boot/config/BTRS.key /usr/local/sbin/emhttp &
-	~~~
-	
-	时间戳转换示例，[在线转换工具](https://tool.lu/timestamp/)：
-	
-	![](https://user-images.githubusercontent.com/35327600/209291869-4c00d313-2e98-414c-b755-e2f48ab44e50.png)
+  ~~~bash
+  #!/bin/bash
+  # ---------修改以下三项内容，只需要修改等号右边内容，左边不要变更--------- #
+  # GUID 将单引号内的内容替换成你自己U盘对应GUID
+  export UNRAID_GUID='xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  # NAME 随便填
+  export UNRAID_NAME=unraid_test
+  # 这是unix的一个时间戳，百度关键词“unix时间戳”，找一个转换网站，将当前时间转换为时间戳后填入，下面有示例
+  export UNRAID_DATE=1658129986
+  # -----------不要修改！！！不要修改！！！不要修改！！！------------------ #
+  export UNRAID_VERSION=Pro
+  LD_PRELOAD=/boot/config/BTRS.key /usr/local/sbin/emhttp &
+  ~~~
+
+  时间戳转换示例，[在线转换工具](https://tool.lu/timestamp/)：
+
+  ![](https://user-images.githubusercontent.com/35327600/209291869-4c00d313-2e98-414c-b755-e2f48ab44e50.png)
 
 此时可以拔下U盘，然后插到你的NAS上，愉快的使用啦~~~
 
