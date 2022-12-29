@@ -64,19 +64,20 @@
     ![](https://user-images.githubusercontent.com/35327600/209305975-9f6ec553-e639-4fd3-8170-6584aa525047.png)
 
 4. 在config目录下找到一个名为“**go**”的文件，先将该文件备份一下，然后用以下内容替换原文件的内容
-  ~~~bash
-  #!/bin/bash
-  # ---------修改以下三项内容，只需要修改等号右边内容，左边不要变更--------- #
-  # GUID 将单引号内的内容替换成你自己U盘对应GUID
-  export UNRAID_GUID='xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-  # NAME 随便填
-  export UNRAID_NAME=unraid_test
-  # 这是unix的一个时间戳，百度关键词“unix时间戳”，找一个转换网站，将当前时间转换为时间戳后填入，下面有示例
-  export UNRAID_DATE=1658129986
-  # -----------不要修改！！！不要修改！！！不要修改！！！------------------ #
-  export UNRAID_VERSION=Pro
-  LD_PRELOAD=/boot/config/BTRS.key /usr/local/sbin/emhttp &
-  ~~~
+
+    ~~~shell
+    #!/bin/bash
+    # ---------修改以下三项内容，只需要修改等号右边内容，左边不要变更--------- #
+    # GUID 将单引号内的内容替换成你自己U盘对应GUID
+    export UNRAID_GUID='xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+    # NAME 随便填
+    export UNRAID_NAME=unraid_test
+    # 这是unix的一个时间戳，百度关键词“unix时间戳”，找一个转换网站，将当前时间转换为时间戳后填入，下面有示例
+    export UNRAID_DATE=1658129986
+    # -----------不要修改！！！不要修改！！！不要修改！！！------------------ #
+    export UNRAID_VERSION=Pro
+    LD_PRELOAD=/boot/config/BTRS.key /usr/local/sbin/emhttp &
+    ~~~
 
   时间戳转换示例，[在线转换工具](https://tool.lu/timestamp/)：
 

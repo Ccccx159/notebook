@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin http://unraid:9080/xu4nch3n/notebooks.git
+git remote add origin http://[IP]:[PORT]/[user name]/notebooks.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](http://unraid:9080/xu4nch3n/notebooks/-/settings/integrations)
+- [ ] [Set up project integrations](http://[IP]:[PORT]/[user name]/notebooks/-/settings/integrations)
 
 ## Collaborate with your team
 
