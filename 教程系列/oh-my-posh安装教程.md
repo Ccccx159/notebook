@@ -22,12 +22,15 @@ docs中有详细的安装和使用说明，下文中有不明白的可以移步�
 # 当前命令中下载的可执行文件是基于amd64架构的，根据自己的系统架构选择下载
 mkdir -p ~/oh-my-posh
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O ~/oh-my-posh/posh;
+wait;
 chmod +x ~/oh-my-posh/posh;
 
 # 下载主题
 mkdir -p ~/oh-my-posh/.poshthemes;
 wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/oh-my-posh/.poshthemes/themes.zip;
+wait;
 unzip -q ~/oh-my-posh/.poshthemes/themes.zip -d ~/oh-my-posh/.poshthemes;
+wait;
 rm ~/oh-my-posh/.poshthemes/themes.zip -vf;
 chmod u+rw ~/oh-my-posh/.poshthemes/*.omp.*;
 
