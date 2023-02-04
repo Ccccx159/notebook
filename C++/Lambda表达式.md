@@ -319,6 +319,95 @@ Item 32: Use init capture to move objects into closures
 
 根据作者的表述，C++14标准中增加“初始化捕获”的初衷，是为了解决C++11中无法移动捕获的缺陷，但是移动捕获只是该捕获机制中的一中执行技术。
 
+为什么初始化捕获可以执行移动捕获？本质上是因为下面两点特性：
+1. 可以指定从 lambda 生成的闭包类中的数据成员的名称；
+2. 可以指定初始化该成员的表达式；
+
+因此可以通过移动语句的表达式完成对成员的初始化，从而实现移动捕获。下面简单介绍一下在C++14标准下通过初始化捕获将特定内容移动到闭包的方法，以及C++11实现近似移动捕获的方法。
+
+其实在C++14中，这显得非常简单，代码如下：
+~~~ cpp
+class Widget {                          //一些有用的类型
+public:
+    …
+    bool isValidated() const;
+    bool isProcessed() const;
+    bool isArchived() const;
+private:
+    …
+};
+
+auto pw = std::make_unique<Widget>();   //创建Widget；使用std::make_unique
+                                        //的有关信息参见条款21
+
+…                                       //设置*pw
+
+auto func1 = [pw = std::move(pw)]        //使用std::move(pw)初始化闭包数据成员
+            { return pw->isValidated()
+                     && pw->isArchived(); };
+
+~~~
+在 capture 子句中，“=” 的左侧是指定的数据成员，右侧则是初始化表达式。这里就是通过初始化捕获的方式，将一个 `std::unique_ptr` 移动到了闭包类中。关于“=”左右两侧的作用域，我想应该不比多少，左侧既然是闭包类的数据成员，那么其作用域必然仅仅在闭包类之内，而右侧则是一个外部变量，那么其作用域必然和当前的 lambda 享有同样的作用域。
+
+倘若上述例子中，不需要要设置 \*pw 那么可以再度简化 lambda 的捕获语句，如下所示：
+~~~ cpp
+auto func1 = [pw = std::make_unique<Widget>()]
+            { return pw->isValidated()
+                     && pw->isArchived(); };
+~~~
+因此，在C++14标准下，通过初始化捕获模式完成移动捕获是一件非常简单和便捷的事。但是这并不代表在C++11标准下，移动捕获是不可实现的。
+
+对于在C++11下实现移动捕获，《Effective Modern C++》中给出了两种方式来模拟初始化捕获。
+
+第一种，手写“闭包类”。<font color=red>Lambda 表达式只是生成一个类和创建该类型对象的一种简单方式</font>，因此通过手写实现这个类，同样可以模拟实现初始化捕获。直接看例子：
+~~~ cpp
+class IsValAndArch {                            //“is validated and archived”
+public:
+    using DataType = std::unique_ptr<Widget>;
+    
+    explicit IsValAndArch(DataType&& ptr)       //条款25解释了std::move的使用
+    : pw(std::move(ptr)) {}
+    
+    bool operator()() const
+    { return pw->isValidated() && pw->isArchived(); }
+    
+private:
+    DataType pw;
+};
+
+auto func2 = IsValAndArch(std::make_unique<Widget>()); // func 的真实类型是什么？ IsValAndArch
+~~~
+
+通过将构造函数的参数设置为右值引用类型，通过 `std::move` 完成对数据成员 pw 的初始化。并通过重载括号运算符 `()` ，使对象可以通过 `()` 直接获取 Widget 对象 pw 的状态。虽然此处 func2 的使用方式和上文中的 func1 看起来一致，都形如 `func()`，但是两个 func 在本质上存在着差异，func1 实际为一个闭包对象，可以通过 `std::function` 进行包装，而 fun2 本质上只是普通类 IsValAndArch 的一个实例对象而已！
+
+第二种模拟初始化捕获的方式，则是使用 `std::bind`：
+1. 将要捕获的对象移动到由 `std::bind` 产生的函数对象中；
+2. 将“被捕获的”对象的引用赋予给 lambda 表达式。
+~~~ cpp
+std::vector<double> data;               //要移动进闭包的对象
+
+…                                       //填充data
+
+auto func = [data = std::move(data)]    //C++14初始化捕获
+            { /*使用data*/ };
+
+auto func_cpp11 =
+    std::bind(                              //C++11模拟初始化捕获
+        [](const std::vector<double>& data) //译者注：本行高亮
+        { /*使用data*/ },
+        std::move(data)                     //译者注：本行高亮
+    );
+
+~~~
+当然上面两个func不能写到同一处，因为在初始化捕获时，data已经将其内容移动到 func 这个闭包对象的数据成员 data 中了，在 func_cpp11 中再次进行 move 自然是无效移动了。
+
+<font color=red>在默认情况下，从 lambda 生成的闭包类中的 operator() 成员函数为 const 的，这能将闭包中的所有数据成员渲染为 const 的效果</font>。<mark>而 std::bind 对象内部的移动构造的 data 副本不是 const的</mark>，因此为了避免 lambda 内部对该副本产生修改，此处形参声明为 reference-to-const 是必要的。
+
+下面是《Effective Modern C++》中对此节内容的总结，一起看一下：
++ 无法移动构造一个对象到C++11闭包，但是可以将对象移动构造进C++11的bind对象。
++ 在C++11中模拟移动捕获包括将对象移动构造进bind对象，然后通过传引用将移动构造的对象传递给lambda。
++ 由于bind对象的生命周期与闭包对象的生命周期相同，因此可以将bind对象中的对象视为闭包中的对象。
+
 ### 条款33：对auto&&形参使用decltype用以std::forward（完美转发）它们
 
 Item 33: Use decltype on auto&& parameters to std::forward them
