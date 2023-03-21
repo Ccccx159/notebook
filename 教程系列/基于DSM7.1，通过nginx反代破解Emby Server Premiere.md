@@ -116,5 +116,27 @@ server {
 
 ```bash
 # hosts
-mb3admin.com <群晖IP>
+# <群晖IP> mb3admin.com
+# 假如群晖IP是：192.168.1.100，则如下所示
+192.168.1.100 mb3admin.com
 ```
+
+### 5、向Emby服务端的证书库中导入CA证书
+
+在日志中发现会存在无法建立SsL连接的情况，爬贴后发现，是因为自签名证书不被Emby信任导致。这时候就需要我们将当初申请证书时，获取到的CA证书导入到Emby的可信任证书库中。docker 版本的话，需要先确认根证书文件是否由 host 端导入。整体操作流程，无论是套件版本还是 docker 版本，都大同小异。下面以套件版本为例进行说明。
+
+> 一般根证书文件存储在 `/etc` 目录下，因此需要 root 权限才能完成。以下操作均在 root 用户下进行。
+
+1. 进入证书存储的目录，以上文为例，执行命令： `cd /volume1/web/mb3admin.com` 
+2. 打印证书内容，观察格式是否正确：`cat mb3admin.com.cert.pem`
+    按下回车键后，屏幕将输出形如一下内容，确认文件以 `-----BEGIN CERTIFICATE-----` 开头，`-----END CERTIFICATE-----` 结尾：
+    ![](https://img-blog.csdnimg.cn/img_convert/61aeee6cc39dee935294d56e3bd929a8.jpeg)
+3. 将证书拷贝至对应目录，并重命名。这里以群晖7.1为例，执行以下命令：
+~~~bash
+sudo mkdir -p /usr/syno/etc/security-profile/ca-bundle-profile/ca-certificates/;
+cp /volume1/web/mb3admin.com/mb3admin.com.cert.pem /usr/syno/etc/security-profile/ca-bundle-profile/ca-certificates/mb3admin.com.crt;
+~~~
+
+>  /usr/syno/etc/security-profile/ca-bundle-profile/ca-certificates/ 这个路径是从update-ca-certificates.sh中获取的，不同系统的路径可能不同，建议先执行 `sodu find / -name "update-ca-certificates` ，查找这个文件。例如群晖7.1中，该文件位于 /usr/syno/bin 中。使用 cat 命令查看文件内容，找到 `USERCERTSDIR=xxxxxxx` 行，"xxxxxxxx" 就是对应的路径；Ubuntu系统下，找到 LOCALCERTSDIR=xxxxx 行即可。
+
+4. 更新根证书，执行命令：`update-ca-certificates.sh`

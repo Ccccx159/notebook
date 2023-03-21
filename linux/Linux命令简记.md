@@ -88,6 +88,8 @@ cat file.tar.gz.des3.* | openssl enc -d -des3 -salt -k P@ssw0rd | tar -zxvf -
 + --include : 搜索指定的文件
 + --exclude : 搜索结果中排除指定文件
 + --exclude-from \<fileList\>: 在搜索结果中排除fileList中的文件，一行一个“pattern”
++ -Fx : 完全匹配
++ -w : 精确匹配
 
 ### 多条件与（and），或（or）查询
 
