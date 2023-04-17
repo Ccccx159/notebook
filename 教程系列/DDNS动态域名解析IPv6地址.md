@@ -13,8 +13,8 @@ categories:
 # DDNS动态域名解析IPv6地址
 
 通过公网IPv6地址实现远程访问专栏系列文章：
-1. [《使用公网IPv6远程访问内网设备》](https://blog.csdn.net/qq_38894585/article/details/129664331)
-2. 二、[《DDNS动态域名解析IPv6地址》](https://ccccx159.github.io/2023/03/21/DDNS%E5%8A%A8%E6%80%81%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90IPv6%E5%9C%B0%E5%9D%80/)
+1. [《使用公网IPv6远程访问内网设备》](https://ccccx159.github.io/2023/03/21/%E4%BD%BF%E7%94%A8%E5%85%AC%E7%BD%91IPv6%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%E5%86%85%E7%BD%91%E8%AE%BE%E5%A4%87/)
+2. [《DDNS动态域名解析IPv6地址》](https://ccccx159.github.io/2023/03/21/DDNS%E5%8A%A8%E6%80%81%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90IPv6%E5%9C%B0%E5%9D%80/)
 
 ><font color=red>付费提示！</font>
 >
@@ -114,13 +114,10 @@ OK，话不多说，下面开始逐步进行详细的说明和介绍
 ![](https://user-images.githubusercontent.com/35327600/232403948-a30edf1b-bb73-4555-9059-dcda07ba3430.png)
 
 打开CMD，进行 ping 连接测试 `ping -6 ipv6.testdomain.xyz`：
-
-![image](https://user-images.githubusercontent.com/35327600/232404597-67f21713-5820-45fb-b232-ec8e0b21593e.png)
-![image](https://user-images.githubusercontent.com/35327600/232404597-67f21713-5820-45fb-b232-ec8e0b21593e.png)
+![](https://user-images.githubusercontent.com/35327600/232404597-67f21713-5820-45fb-b232-ec8e0b21593e.png)
 
 显示正常 ping 通，说明解析服务已经正常生效了。然后我们再使用 mstsc 进行远程方式试试：
-
-![image](https://user-images.githubusercontent.com/35327600/232405249-d864a176-6e29-4d03-a9fa-f8d713524e2d.png)
+![](https://user-images.githubusercontent.com/35327600/232405249-d864a176-6e29-4d03-a9fa-f8d713524e2d.png)
 
 也能正常进行远程连接了。至此我们已经完成了通过域名解析到IPv6地址，并进行远程访问的所有设置。接下来我们进行 DDNS 动态域名解析的相关设置。
 
@@ -132,27 +129,27 @@ OK，话不多说，下面开始逐步进行详细的说明和介绍
 >这里推荐一个多平台（win、linux、macos等）可用，且支持docker运行的开源 DDNS 服务："[ddns-go](https://github.com/jeessy2/ddns-go)"，可以直接前往 github 仓库查看其使用说明。整体使用和下文配置大同小异，可相互参考借鉴。
 
 openwrt 中的 "动态 DNS" 界面如下：
-![image](https://user-images.githubusercontent.com/35327600/232416946-0c5db466-f400-42de-9668-da6ecc806b1b.png)
+![](https://user-images.githubusercontent.com/35327600/232416946-0c5db466-f400-42de-9668-da6ecc806b1b.png)
 
 可以看到我已经添加了一条配置，下面我们将详细介绍如何通过 "动态 DNS" 插件完成对腾讯云域名的动态解析设置。
 
-![image](https://user-images.githubusercontent.com/35327600/232418446-39dda62d-3a00-4457-8281-4b3e4442b537.png)
+![](https://user-images.githubusercontent.com/35327600/232418446-39dda62d-3a00-4457-8281-4b3e4442b537.png)
 
 点击添加按钮后，进入详细配置：
 
-![image](https://user-images.githubusercontent.com/35327600/232418767-a9c47b89-b09a-4614-821d-b174f86ab446.png)
+![](https://user-images.githubusercontent.com/35327600/232418767-a9c47b89-b09a-4614-821d-b174f86ab446.png)
 
 由于不同 DNS 服务提供商所需要填充的设置也不同，因此进入以后我们先选择 "DDNS 服务提供商"，由于我们是通过腾讯云注册的，腾讯云提供的默认服务商为 DNSPOD，因此这里我们选择 "dnspod.cn":
 
-![image](https://user-images.githubusercontent.com/35327600/232419295-ace51558-691f-49cc-ad44-df5f2f30c22f.png)
+![](https://user-images.githubusercontent.com/35327600/232419295-ace51558-691f-49cc-ad44-df5f2f30c22f.png)
 
 点击更改提供者之后，就能看到详细的配置项了：
 
-![image](https://user-images.githubusercontent.com/35327600/232421210-57247aea-d68d-4bca-8e6e-d83d8aea852d.png)
+![](https://user-images.githubusercontent.com/35327600/232421210-57247aea-d68d-4bca-8e6e-d83d8aea852d.png)
 
 其中 dsnpod 的用户 id 和 token，可前往 [DNSPOD 控制台](https://console.dnspod.cn/account/token/token)进行创建。
 
-![image](https://user-images.githubusercontent.com/35327600/232422150-426adcc2-6627-49ac-836f-288e891964f6.png)
+![](https://user-images.githubusercontent.com/35327600/232422150-426adcc2-6627-49ac-836f-288e891964f6.png)
 
 ![](https://user-images.githubusercontent.com/35327600/232422444-c358c376-7cf3-4a11-b051-436e3d91ee6f.png)
 
@@ -160,7 +157,7 @@ openwrt 中的 "动态 DNS" 界面如下：
 
 将此处获取的 id 和 token 填入到插件配置中，填充完成后点击右下角 "保存&应用" 完成配置创建。然后点击下图中的启动按钮，即可启动 DDNS 服务：
 
-![image](https://user-images.githubusercontent.com/35327600/232423971-36958701-6405-4201-97b1-c1a398a9aa66.png)
+![](https://user-images.githubusercontent.com/35327600/232423971-36958701-6405-4201-97b1-c1a398a9aa66.png)
 
 我们在点击修改按钮进入配置界面，点击上方的"日志查看器"，点击"读取/重新读取日志文件"，查看下方日志内容：
 ![](https://user-images.githubusercontent.com/35327600/232425360-7d05ca20-83c8-43ca-aa0a-89a05e08eebe.png)
@@ -181,7 +178,7 @@ openwrt 防火墙的端口转发仅支持 IPv4 to IPv4。我们现在需要进�
 
 点击插件界面的 "添加" 按钮，按下图所示完成配置后，点击 "保存&应用"，即可完成最后的端口转发设置。
 
-![image](https://user-images.githubusercontent.com/35327600/232432133-eeadc95b-5d55-4ddb-afd8-8e5de8998c3c.png)
+![](https://user-images.githubusercontent.com/35327600/232432133-eeadc95b-5d55-4ddb-afd8-8e5de8998c3c.png)
 
 
 ## 四、总结
