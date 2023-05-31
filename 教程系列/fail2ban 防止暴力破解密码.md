@@ -151,10 +151,12 @@ fail2ban 提供了 docker 版本，因此安装配置也是相对简单的，下
 ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/e6fcd2c4d2085ef6739a64c2331afc1a/1685520332045.png)
 
 我这边开了7个监控服务，刚才被封禁的是 unraid-sshd，我们在看一下详细的监控服务状态：
+
 ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/8667dfceba63606dcbd1bb3eea6dfee2/1685520362023.png)
 
 列出了当前服务失败次数和总次数，以及当前封禁的 ip 数量和总 ip 数量，并列举出了被封禁的详细 ip。
 我们可以通过 `fail2ban-client set <服务名称> unbanip <被封禁的 IP 地址>` 来取消封禁：
+
 ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/b82877dd944756d2e25844094fd5a41a/1685520388282.png)
 
 
