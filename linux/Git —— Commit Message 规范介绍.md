@@ -37,7 +37,7 @@ git 规定提交时必须要写提交信息，作为改动说明，保存在 com
 
 2. Conventional Commits 规范：这是一个基于语义化版本 (semver) 和简单的消息格式的轻量级约定，一传达代码更改的意图。
 
-这里我们着重介绍以下 Angular 规范。
+这里我们着重介绍一下 Angular 规范。
 
 ### Angular 规范
 
