@@ -41,8 +41,6 @@ git 规定提交时必须要写提交信息，作为改动说明，保存在 com
 
 ### Angular 规范
 
-
-
 Angular 规范是一种广泛应用于软件开发中的提交信息（commit message）规范，其目的在于提供一种统一、清晰的提交信息格式，以便于开发者和维护者理解代码的变动情况。
 
 Angular 规范将提交信息分为三个部分：Header、Body 和 Footer。
@@ -77,27 +75,27 @@ Angular 规范的提交信息格式如下：
 
 >注意：商店中有两个名为 git-commit-plugin 的插件，我们选择作者为 redjue 的那一个。另一个为fork的版本，已经不再维护。
 
-![git-commit-plugin](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/0cd57b334faac82c88858d17cb3ff3e3/1703558434900.png)
+![git-commit-plugin](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/0cd57b334faac82c88858d17cb3ff3e3/1703558434900.png)
 
 安装完成后，我们点击 VS Code 左侧面板的存储库图标，可以看到存储库的右边出现了一个 git 图标，点击它就可以打开 git-commit-plugin 的界面。
 
 1. 打开 git-commit-plugin 界面：
 
-      ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/153afa2bf93c4a55d9e4c5420aa43ee0/1703558938449.png)
+      ![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/153afa2bf93c4a55d9e4c5420aa43ee0/1703558938449.png)
 
 2. 选择提交类型，这里以 fix 为例：
 
-      ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/1ec1f6e85b71bd74e244632584d64eb3/1703559027194.png)
+      ![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/1ec1f6e85b71bd74e244632584d64eb3/1703559027194.png)
 
 3. 按照 Angular 规范依次完成 scope，subject，body 和 footer 字段
 
-      ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/45e369bb0b664b9ee79ae550bc0524cb/1703559610753.png)
+      ![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/45e369bb0b664b9ee79ae550bc0524cb/1703559610753.png)
 
 4. 完成每项内容的填写后，点击 Complete，插件会将填写的内容，按照规范自动生成在左侧源代码管理面板中的提交信息中：
 
-      ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/cd6eb2280db4b9e0e125bc83329c0bd6/1703559528891.png)
+      ![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/cd6eb2280db4b9e0e125bc83329c0bd6/1703559528891.png)
 
-      ![](https://gitlab.b1gfac3c4t.top:1594/xu4nch3n/notebooks/uploads/df8e94be63ac8bdc9528e84a2bf2cd83/1703559648902.png)
+      ![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/df8e94be63ac8bdc9528e84a2bf2cd83/1703559648902.png)
       
       注意此处 VS Code 会提示“当前行比72超出39个字符”，这是因为 VS Code 限制了提交消息每行的最大长度。我们在上一步编辑 Body 时，受限于插件的界面，将所有内容都写在了一行中，因此在这里我们需要将 Body 部分的内容进行换行，达到美观和规范的目的。
 
@@ -150,3 +148,10 @@ Angular 规范的提交信息格式如下：
 此时通过命令 `git commit` （**不能带参数 -m ！**）即可显示模板，并在模板中快速完成 Commit Message 的编辑。
 
 
+![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/2f3bac498fc45f31f266dc5c6edb3135/1703569918312.png)
+
+![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/a0b698669c2690308be04db208c5dd77/1703570281939.png)
+
+![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/bd892785244176b2fc593c84e84a81a5/1703570593953.png)
+
+![](https://gitlab.ccccxyz.top:8443/xu4nch3n/notebooks/uploads/793f74f73b0aa895fcc4abf8ab95eb4a/1703571607092.png)
