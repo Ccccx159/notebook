@@ -106,6 +106,47 @@ Angular 规范的提交信息格式如下：
 
 ## Commit Message 模板的配置和使用
 
+在某些环境下，可能仅有的就是一个命令行终端，我们需要在命令行中手动输入 Commit Message。这时候我们就需要一个 Commit Message 模板来帮助我们快速生成符合规范的 Commit Message。
 
+以 Linux 端为例，git 提供了一个 commit.template 的配置项，用来指定期望使用的 Commit Message 模板。
+
+1. 首先我们在项目的根目录创建一个 .gitmessage 文件，用来存放 Commit Message 模板：
+
+      ```bash
+      touch .gitmessage
+      ```
+2. 然后我们编辑 .gitmessage 文件，将以下内容复制到 .gitmessage 文件中：
+
+      ```bash
+      # head: <type>(<scope>): <subject>
+      # - type: ✨ feat, 🐞 fix, 📃 docs, 🌈 style, 🦄 refactor, 🎈 perf, 🧪 test, 🔧 build, 🐎 ci, 🐳 chore, ↩ revert
+      # - scope: can be empty (eg. if the change is a global or difficult to assign to a single component)
+      # - subject: start with verb (such as 'change'), 50-character line
+      #
+
+      # body: 72-character wrapped. This should answer:
+      # * Why was this change necessary?
+      # * How does it address the problem?
+      # * Are there any side effects?
+      #
+
+      # footer: 
+      # - Include a link to the ticket, if any.
+      # - BREAKING CHANGE
+      #
+
+      ```
+
+3. 在项目路径下，我们通过 `git config` 命令指定 commit.template 的路径：
+
+      ```bash
+      git config commit.template .gitmessage
+      ```
+      > 注意：这里仅对当前项目进行了模板配置，如果想要对所有项目使用该模板，则将该文件放置到用户目录下，然后在上述命令中添加 --global 参数即可。 
+      >
+      > `git config --global commit.template ~/.gitmessage`
+
+
+此时通过命令 `git commit` （**不能带参数 -m ！**）即可显示模板，并在模板中快速完成 Commit Message 的编辑。
 
 
